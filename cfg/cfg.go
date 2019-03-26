@@ -121,6 +121,8 @@ func (c *Cfg) Parse(cfgfile string) error {
 		fmt.Print("Error detected\n")
 		return err
 	}
+	// Let's hardwire this right here.
+	c.Core.TransferMode = "http"
 
 	return nil
 }
