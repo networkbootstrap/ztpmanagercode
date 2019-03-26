@@ -161,8 +161,16 @@ func (w WebFuncs) save(c echo.Context) error {
 }
 
 // StartCfgAPI starts the JSON config API server...
-func StartCfgAPI(cachesend chan rt.Envelope, configsend chan rt.Envelope, port int) (echoSrv *echo.Echo, err error) {
+func StartCfgAPI(cachesend chan rt.Envelope, configsend chan rt.Envelope, port int, httpuser string, httppasswd string) (echoSrv *echo.Echo, err error) {
 	echoSrv = echo.New()
+
+	echoSrv.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+		if username == httpuser && password == httppasswd {
+			return true, nil
+		}
+		return false, nil
+	}))
+
 	echoSrv.Use(middleware.Recover())
 	echoSrv.HideBanner = true
 	web := WebFuncs{}
@@ -190,7 +198,7 @@ func StartCfgAPI(cachesend chan rt.Envelope, configsend chan rt.Envelope, port i
 	return echoSrv, nil
 }
 
-// StartStaticAPI starts the JSON config API server...
+// StartStaticAPI starts the file server...
 func StartStaticAPI(configfiles string, imagesfiles string, configname string, imagesname string) (echoSrv *echo.Echo, err error) {
 	echoSrv = echo.New()
 	echoSrv.Use(middleware.Recover())

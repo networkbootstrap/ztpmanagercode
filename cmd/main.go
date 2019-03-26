@@ -48,7 +48,7 @@ func main() {
 	// Create APIResponder (config service) (launches a GR) and returns communications channels
 	configsend, configfinish := config.APIResponder(cachesend, *configfile, &wg)
 	// Create configuration REST JSON service (launches a GR) and returns an Echo instance and error
-	cfgapi, err := rest.StartCfgAPI(cachesend, configsend, config.Core.ServerPort)
+	cfgapi, err := rest.StartCfgAPI(cachesend, configsend, config.Core.ServerPort, config.Core.HTTPUser, config.Core.HTTPPasswd)
 	if err != nil {
 		// Close everything else down
 		close(cachefinish)

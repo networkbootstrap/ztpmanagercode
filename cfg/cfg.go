@@ -82,6 +82,8 @@ type Cfg struct {
 
 // CoreCfg holds core info
 type CoreCfg struct {
+	HTTPUser            string   `json:"httpuser"`
+	HTTPPasswd          string   `json:"httppasswd"`
 	ServerURL           string   `json:"serverurl"`
 	ServerPort          int      `json:"srverport"`
 	HTTPConfigsLocation string   `json:"-"` // Directory for serving configurations "configs"
@@ -148,15 +150,6 @@ func (c *Cfg) Save(cfgfile string) error {
 	w := bufio.NewWriter(f)
 	tomlEncoder := toml.NewEncoder(w)
 
-	// // Lock the cache, we're going to read everything
-	// req := rt.Envelope{}
-	// req.CRUD = rt.LOCK
-	// req.Response = make(chan rt.Envelope, 1)
-
-	// send <- req
-	// resp := <-req.Response
-	// if resp.CRUD == rt.OK {
-
 	err = tomlEncoder.Encode(c)
 	if err != nil {
 		return err
@@ -168,13 +161,6 @@ func (c *Cfg) Save(cfgfile string) error {
 		return err
 	}
 
-	// 	req.CRUD = rt.UNLOCK
-	// 	send <- req
-	// 	resp := <-req.Response
-	// 	if resp.CRUD == rt.OK {
-	// 		return nil
-	// 	}
-	// }
 	return nil
 }
 
@@ -187,26 +173,9 @@ func (c Cfg) CreateIfaceSetting() (string, error) {
 
 	buf := new(bytes.Buffer)
 
-	// // Lock the cache, we're going to read everything
-	// req := rt.Envelope{}
-	// req.CRUD = rt.LOCK
-	// req.Response = make(chan rt.Envelope, 1)
-
-	// send <- req
-	// resp := <-req.Response
-	// if resp.CRUD == rt.OK {
-
 	buf.Write([]byte(fmt.Sprintf(ifacetmpl, strtimeStamp, c.Core.DHCPIface)))
 	buf.Write([]byte(fmt.Sprint("\n")))
 
-	// req.CRUD = rt.UNLOCK
-	// send <- req
-	// resp := <-req.Response
-	// if resp.CRUD == rt.OK {
-	// 	return buf.String(), nil
-	// }
-	//}
-	//return "", errors.New("Error with cache locking")
 	return buf.String(), nil
 }
 
@@ -219,15 +188,6 @@ func (c Cfg) CreateDHCPd() (string, error) {
 	buf := new(bytes.Buffer)
 	buf.Write([]byte(fmt.Sprintf(dhcpdtmpl, strtimeStamp)))
 	buf.Write([]byte(fmt.Sprint("\n")))
-
-	// // Lock the cache, we're going to read everything
-	// req := rt.Envelope{}
-	// req.CRUD = rt.LOCK
-	// req.Response = make(chan rt.Envelope, 1)
-
-	// send <- req
-	// resp := <-req.Response
-	// if resp.CRUD == rt.OK {
 
 	// Let's deal with the core
 	core := c.Core
@@ -289,13 +249,6 @@ func (c Cfg) CreateDHCPd() (string, error) {
 	// End Group creation
 	buf.Write([]byte("}\n"))
 
-	// req.CRUD = rt.UNLOCK
-	// send <- req
-	// resp := <-req.Response
-	// if resp.CRUD == rt.OK {
-	// 	return buf.String(), nil
-	// }
-	//}
 	return buf.String(), nil
 }
 

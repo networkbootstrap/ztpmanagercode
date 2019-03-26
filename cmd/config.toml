@@ -1,4 +1,6 @@
 [Core]
+  HTTPUser = "admin"
+  HTTPPasswd = "Passw0rd"
   ServerURL = "localhost"
   ServerPort = 1323
   HTTPConfigsLocation = "configs"
