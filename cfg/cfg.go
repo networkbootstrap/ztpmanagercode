@@ -382,7 +382,12 @@ func (c *Cfg) APIResponder(cachesend chan rt.Envelope, fname string, wg *sync.Wa
 						break
 					}
 					err = w.Flush()
-					if err := f.Close(); err != nil {
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					if err = f.Close(); err != nil {
 						fmt.Print(err)
 						resp.CRUD = rt.ERROR
 						recv.Response <- resp
