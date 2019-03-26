@@ -33,9 +33,17 @@ func SaveJunosConfig(file string, templ string, payload JunosTemplatePayload) er
 
 	err = t.Execute(w, payload)
 
+	if err != nil {
+		return err
+	}
+
 	err = w.Flush()
 
-	if err := f.Close(); err != nil {
+	if err != nil {
+		return err
+	}
+
+	if err = f.Close(); err != nil {
 		return err
 	}
 

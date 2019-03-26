@@ -157,7 +157,11 @@ func (c *Cfg) Save(cfgfile string) error {
 
 	err = w.Flush()
 
-	if err := f.Close(); err != nil {
+	if err != nil {
+		return err
+	}
+
+	if err = f.Close(); err != nil {
 		return err
 	}
 
