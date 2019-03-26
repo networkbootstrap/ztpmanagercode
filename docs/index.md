@@ -1,17 +1,17 @@
-# Welcome to MkDocs
+# Welcome
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
+This set of docs will guide you through installation and use of ZTPManager.
 
-## Commands
+## What is this ZTPManager?
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+ZTPManager is an application manager for the [ISC-DHCP-SERVER](https://www.isc.org/downloads/dhcp/) which configures it for use in Zero Touch Provisioning (ZTP) scenarios. Initially created for Junos but with some feature enhancements can probably be used for other vendors.
 
-## Project layout
+__ZTPManager does:__
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- Configures `dhcpd.conf` file with basic info and hosts for each ZTP client.
+- Creates initial configurations from templates for Juniper devices.
+- Manages `isc-dhcp-server` file and serving interfaces.
+- Provides a HTTP JSON API for configuration (super simple).
+- Installs the ISC-DHCP-SERVER.
+
+You basically get your life back and stop trying to figure out how to configure a DHCP server for ZTP.
