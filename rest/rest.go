@@ -10,19 +10,6 @@ import (
 	rt "github.com/networkbootstrap/ztpmanagercode/roottypes"
 )
 
-// TODO
-// 1.	When deleting entries, delete configuration file from gen directory
-// 2.	When saving, generate configuration file from templates
-
-//----------
-// Handlers
-//----------
-
-// Echo example helpers
-// return c.JSON(http.StatusOK, users[id])
-// return c.NoContent(http.StatusNoContent)
-// return c.JSON(http.StatusCreated, u)
-
 // WebFuncs is the base struct type for the web functions.
 // It was either this or wrap it. Urgh. This is easier :)
 type WebFuncs struct {
@@ -31,7 +18,6 @@ type WebFuncs struct {
 }
 
 func (w WebFuncs) getHost(c echo.Context) error {
-
 	ip := c.Param("ip")
 	req := rt.Envelope{}
 	req.CRUD = rt.READHOST
@@ -47,7 +33,6 @@ func (w WebFuncs) getHost(c echo.Context) error {
 }
 
 func (w WebFuncs) getHosts(c echo.Context) error {
-
 	req := rt.Envelope{}
 	req.CRUD = rt.READHOSTS
 	req.Response = make(chan rt.Envelope, 1)
@@ -58,7 +43,6 @@ func (w WebFuncs) getHosts(c echo.Context) error {
 }
 
 func (w WebFuncs) deleteHost(c echo.Context) error {
-
 	ip := c.Param("ip")
 
 	// Has to be in this order. On the second layer down, the actual cache entry is removed, leaving us just with files.
@@ -80,15 +64,11 @@ func (w WebFuncs) deleteHost(c echo.Context) error {
 		if resp2.CRUD == rt.OK {
 			return c.NoContent(http.StatusAccepted)
 		}
-
 	}
-
 	return c.NoContent(http.StatusBadRequest)
-
 }
 
 func (w WebFuncs) createHost(c echo.Context) error {
-
 	h := new(rt.Hosts)
 	if err := c.Bind(h); err != nil {
 		return err
@@ -110,13 +90,10 @@ func (w WebFuncs) createHost(c echo.Context) error {
 	if resp.CRUD == rt.OK {
 		return c.JSON(http.StatusOK, h)
 	}
-
 	return c.NoContent(http.StatusBadRequest)
-
 }
 
 func (w WebFuncs) updateHost(c echo.Context) error {
-
 	h := new(rt.Hosts)
 	if err := c.Bind(h); err != nil {
 		return err
@@ -139,13 +116,10 @@ func (w WebFuncs) updateHost(c echo.Context) error {
 	if resp.CRUD == rt.OK {
 		return c.JSON(http.StatusOK, h)
 	}
-
 	return c.NoContent(http.StatusBadRequest)
-
 }
 
 func (w WebFuncs) save(c echo.Context) error {
-
 	req := rt.Envelope{}
 	req.CRUD = rt.SAVECFG
 	req.Response = make(chan rt.Envelope, 1)
@@ -155,9 +129,7 @@ func (w WebFuncs) save(c echo.Context) error {
 	if resp.CRUD == rt.OK {
 		return c.NoContent(http.StatusAccepted)
 	}
-
 	return c.NoContent(http.StatusBadRequest)
-
 }
 
 // StartCfgAPI starts the JSON config API server...
