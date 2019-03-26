@@ -126,6 +126,7 @@ If you require SSL, please raise an issue on [GitHub](https://github.com/network
 
 __Create Hosts__
 
+```bash
 curl -X POST \
   -H 'Content-Type: application/json' \
   -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
@@ -136,27 +137,36 @@ curl -X POST \
     "vendor": "junos"
     }' \
    REPLACE_WITH_SERVER_IP:1323/hosts
+```
 
 __Delete Hosts__
 
+```bash
 curl -X DELETE -H 'Content-Type: application/json' \
     -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
     REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP
+```
 
 __Get Hosts__
 
+```bash
 curl -X GET -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
     http://REPLACE_WITH_SERVER_IP:1323/hosts
+```
 
 __Get Individual Hosts__
 
+```bash
 curl -X GET -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
     http://REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP
+```
 
 __Save__
 
+```bash
 curl -X POST -H 'Content-Type: application/json' \
     -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
-    REAPLCE_WITH_SERVER_IP:1323/save
+    REPLACE_WITH_SERVER_IP:1323/save
+```
 
 *These docs are work in progress and will be updated regularly*
