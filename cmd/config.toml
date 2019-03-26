@@ -1,0 +1,30 @@
+[Core]
+  ServerURL = "localhost"
+  ServerPort = 1323
+  HTTPConfigsLocation = "configs"
+  HTTPImagesLocation = "images"
+  FileConfigsLocation = "./configs"
+  FileImagesLocation = "./images"
+  DHCPDPath = "/etc/dhcp/dhcpd.conf"
+  DHCPPath = "/etc/default/isc-dhcp-server"
+  DHCPIface = "ens34"
+  DomainName = "simpledemo.net"
+  DNSServers = ["8.8.8.8", "8.8.4.4"]
+  DefaultLease = 600
+  MaxLease = 7200
+  Subnet = "192.168.50.0"
+  SubnetMask = "255.255.255.0"
+  NonCfgRangeLow = "192.168.50.20"
+  NonCfgRangeHigh = "192.168.50.25"
+  SubnetRouter = "192.168.50.1"
+  TransferMode = "http"
+  FileServer = "192.168.50.254"
+  NTPServers = ["192.168.50.254"]
+
+[Hosts]
+  [Hosts."192.168.50.100"]
+    Ethernet = "00:0c:29:4d:3d:cc"
+    FixedIP = "192.168.50.100"
+    HostName = "demo01"
+    Vendor = "junos"
+    CfgImage = ""

@@ -1,0 +1,67 @@
+system {
+    time-zone Europe/Paris;
+
+    login {
+        user autom8or {
+            uid 2000;
+            class super-user;
+            authentication {
+                encrypted-password "$6$YLyhSYiz$oBpYJsi6gdxmRlKMUluQvCd9NMIe.kJrRtsN5fIyRSRxjZzReM11T.w0VubcXP1yhWykIJP78sBu3WfCmbhXt0"; ## SECRET-DATA
+            }
+        }
+    }
+    root-authentication {
+        encrypted-password "$6$aNOF76gQ$utMoDL7gGYaIw1XWa3blIXWUN1IeBZiQ60xsQEDjkhiUsf0ddSWbmDNgcTDfSevo0b5hJ4AovwKDp523.MYUg/"; ## SECRET-DATA
+    }
+    host-name {{.HostName}};
+    domain-name {{.DomainName}};
+
+    name-server {
+	{{- range $index, $server := .DNSServers}}
+        {{$server -}};
+	{{- end}}
+    }
+    services {
+        netconf {
+            ssh;
+        }
+        ssh {
+            root-login allow;
+        }
+    }
+    login {
+        message "This is the property of Example Corp. Do not login without express permission. ";
+    }
+    syslog  {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+        }
+        file cli-commands {
+            interactive-commands any;
+            explicit-priority;
+        }
+        time-format millisecond;
+    }
+    ntp {
+	{{- range $index, $server := .NTPServers}}
+        server {{$server -}};
+	{{- end}}
+    }
+}
+interfaces {
+    fxp0 {
+        unit 0 {
+            family inet {
+              address {{.FixedIP}}/24;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop {{.Gateway}};
+    }
+}
