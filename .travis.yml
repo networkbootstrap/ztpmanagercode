@@ -20,7 +20,7 @@ before_script:
   - go get github.com/golang/lint/golint     # Linter
 
 script:
-  - diff -u <(echo -n) <(gofmt -d .)         # Run gofmt and display diff
+  #  - diff -u <(echo -n) <(gofmt -d .)         # Run gofmt and display diff - removed because of Echo module causing issues
   - go test -v ./...                         # Run all the tests with the race detector enabled
   - go vet ./...                             # go vet is the official Go static analyzer
   - golint ./...                             # one last linter
