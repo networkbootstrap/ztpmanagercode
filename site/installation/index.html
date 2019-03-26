@@ -120,19 +120,19 @@
 <ul>
 <li>Install ISC-DHCP-SERVER</li>
 <li>Install git</li>
-<li>Does a git clone of the <code>ztpmanagerassets</code> repository</li>
+<li>Clones the <code>ztpmanagerassets</code> repository using git</li>
 <li>Writes elements of the configuration file from script input</li>
 <li>Creates <code>config</code> and <code>images</code> directories</li>
-<li>Launches ZTPmanager with the HTTP file interface running on port 80 and the configuration API running on port 1323.</li>
+<li>Launches <code>ZTPmanager</code> with the HTTP file interface running on port 80 and the configuration API running on port 1323.</li>
 </ul>
 <p>How to run this wonder?</p>
-<p>You must know what the interface on the server is that you would like to serve DHCP. In the case below it's <code>ens34</code>.
+<p>You must know what the interface on the server is that you would like to serve DHCP. In the example below it's <code>ens34</code>.
 Secondly, you must know what URL you would like to access the server on. This could be a FQDN or just an IP address.</p>
 <p>Make sure you have <code>curl</code> installed. On Ubuntu this can be installed with <code>sudo apt install curl</code>.</p>
 <p>Here is the one line install. Copy and paste this in to your terminal. </p>
 <p><code>sudo curl -sSL https://raw.githubusercontent.com/networkbootstrap/ztpmanager/master/install.sh | bash -s -- --url=ztp.simpledemo.net --iface=ens34</code></p>
 <h3 id="manual">Manual</h3>
-<p>In order to do a manual isntall, you're required to have the Go tool-chain installed (written in 1.10), install the dependencies, build and them download the required assets to finish off the installation. As the 'New Kids on the Block' would say, step-by-step:</p>
+<p>In order to do a manual install, you're required to have the Go tool-chain installed (written in 1.10), install the dependencies, build and them download the required assets to finish off the installation. As the 'New Kids on the Block' would say, step-by-step:</p>
 <ol>
 <li>
 <p>Clone the code repository
@@ -144,7 +144,7 @@ Secondly, you must know what URL you would like to access the server on. This co
 </li>
 <li>
 <p>Compile for your target operating system
-<code>GOOS=linux go build</code></p>
+<code>GOOS=linux go build -o ztpmanager</code></p>
 </li>
 <li>
 <p>Create a directory on the target machine
@@ -154,7 +154,7 @@ Secondly, you must know what URL you would like to access the server on. This co
 <p>Copy the binary to the target machine using SCP or your favourite tool</p>
 </li>
 <li>
-<p>Create <code>configs</code> and <code>images</code> direcory on the target machine
+<p>Create <code>configs</code> and <code>images</code> directory on the target machine
 <code>mkdir configs &amp;&amp; mkdir images</code></p>
 </li>
 <li>
@@ -167,7 +167,7 @@ Secondly, you must know what URL you would like to access the server on. This co
 </li>
 <li>
 <p>Install ISC-DHCP-SERVER version 4.3.5 
-` sudo apt-get install -y isc-dhcp-server=4.3.5-3ubuntu7</p>
+<code>sudo apt-get install -y isc-dhcp-server=4.3.5-3ubuntu7</code></p>
 </li>
 <li>
 <p>Start the binary

@@ -121,8 +121,10 @@
 <li>Templates for the initial configuration are stored in the <code>templates/vendor/vendor.template</code> pattern</li>
 </ul>
 <h2 id="configtoml">Config.Toml</h2>
-<p>This file contains the core configuration required to bootstrap the ZTPManager. Host information can also go in here if you're confident enough to create the entries. The JSON API actually drives an operation that does this anyway. To re-word this, if you do a POST operation on /hosts, the application adds the new host to this file as well as holding the information in memory. What follows is the generic <code>config.toml</code> file contents and an explanation of each field.</p>
+<p>This file contains the core configuration required to bootstrap the ZTPManager. Host information can also go in here if you're confident enough to create the entries. The JSON API actually drives an operation that does this anyway. To re-word this, if you do a POST operation on <code>/hosts</code> then do a POST on <code>/save</code>, the application adds the new host to this file, writes the <code>dhcpd.conf</code> file and generates the device configuration from the templates in the <code>templates</code> directory. What follows is the generic <code>config.toml</code> file contents and an explanation of each field.</p>
 <pre><code class="bash">[Core]
+    HTTPUser = &quot;admin&quot;
+    HTTPPasswd = &quot;Passw0rd&quot;
   ServerURL = &quot;localhost&quot;
   ServerPort = 1323
   HTTPConfigsLocation = &quot;configs&quot;
@@ -154,7 +156,70 @@
     CfgImage = &quot;&quot;
 </code></pre>
 
+<p>This configuration file is written in TOML or "Tom's Obvious, Minimal Language", named after Tom Preston-Wener. It is easy to work with and easy to read.</p>
+<p>The <code>[Core]</code> section contains information relevant to the isc-dhcp-server itself. <code>[Hosts]</code> naturally contains information relevant to hosts. Each host entry is a key to a map/dictionary and thus must be unique. If you have a host entry with the same IP being referenced, it will overwrite previous entries. You've been warned!</p>
+<p><strong>HTTPUser</strong>
+This is the HTTP basic auth username.</p>
+<p><strong>HTTPPasswd</strong>
+This is the HTTP basic auth password.</p>
+<p><strong>ServerURL</strong>
+This is the URL; either FQDN or IP address of the server the ZTPManager application will run. </p>
+<p><strong>ServerPort</strong>
+This is the TCP port number the configuration API will run. The file delivery mechanism is hardwired to TCP 80 and is not configurable.</p>
+<p><strong>HTTPConfigsLocation</strong>
+This is the name of the configs directory that the webserver will listen for. The webserver maps this variable name to the file path (below).</p>
+<p><strong>FileConfigsLocation</strong>
+This is the absolute or relative location of the directory on the system that will serve files.</p>
+<p><strong>HTTPImagesLocation</strong>
+This is the name of the images directory that the webserver will listen for. The webserver maps this variable name to the file path (below).</p>
+<p><strong>FileImagesLocation</strong>
+This is the absolute or relative location of the directory on the system that will serve files.</p>
+<p><strong>DHCPDPath</strong>
+The location of the <code>dhcpd.conf</code> file.</p>
+<p><strong>DHCPPath</strong>
+The location of the directory which contains the <code>isc-dhcp-server</code> file, which contains basic configuration like the interface to bind the dhcp service to.</p>
+<p><strong>DHCPIface</strong>
+The name of the interface to bind the dhcp service to.</p>
+<p><strong>DomainName</strong>
+Domain name for the DHCP service.</p>
+<p><strong>DNSServers</strong>
+List of DNS servers for the DHCP service.</p>
+<p><strong>DefaultLease</strong>
+Default lease time for DHCP leases.</p>
+<p><strong>MaxLease</strong>
+Maximum lease time for DHCP leases.</p>
+<p><strong>Subnet</strong>
+Subnet from which leases are made.</p>
+<p><strong>SubnetMask</strong>
+Mask for the subnet.</p>
+<p><strong>NonCfgRangeLow</strong>
+Some devices just need DHCP without the ZTP aspect. This range is for those devices. This is the low address for the pool.</p>
+<p><strong>NonCfgRangeHigh</strong>
+This is the high address for the pool (see above).</p>
+<p><strong>SubnetRouter</strong>
+Router for the subnet.</p>
+<p><strong>FileServer</strong>
+The address of the file server. This should be the IP address of the server interface that serves DHCP. At some point, this will be automatic. Today it is not.</p>
+<p><strong>NTPServers</strong>
+List of NTP servers for the DHCP process.</p>
 <h2 id="http-json-api">HTTP JSON API</h2>
+<p>Here are some examples on how to exercise the JSON API. One day this will be served through a Swagger interface (todo).</p>
+<p>Authentication is done via HTTP Basic Auth. Please remember to use <code>/save</code> after each API set of POST calls to <code>/host</code>.</p>
+<p>If you require SSL, please raise an issue on <a href="https://github.com/networkbootstrap/ztpmanagerassets.git">GitHub</a> and let's chat about it!</p>
+<p><strong>Create Hosts</strong></p>
+<p><code>curl -X POST 
+-H 'Content-Type: application/json' 
+-d '{ "ethernetaddress": "00:0c:29:4d:3d:cd", "fixedipaddress": "192.168.50.101", "hostname": "demo02", "vendor": "junos" }' 
+REPLACE_WITH_SERVER_IP:1323/hosts</code></p>
+<p><strong>Delete Hosts</strong></p>
+<p><code>curl -X DELETE -H 'Content-Type: application/json' REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP</code></p>
+<p><strong>Get Hosts</strong></p>
+<p><code>curl -X GET http://REPLACE_WITH_SERVER_IP:1323/hosts</code></p>
+<p><strong>Get Individual Hosts</strong></p>
+<p><code>curl -X GET http://REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP</code></p>
+<p><strong>Save</strong></p>
+<p><code>curl -X POST -H 'Content-Type: application/json' REAPLCE_WITH_SERVER_IP:1323/save</code></p>
+<p><em>These docs are work in progress and will be updated regularly</em></p>
               
             </div>
           </div>
