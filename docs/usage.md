@@ -13,8 +13,8 @@ This file contains the core configuration required to bootstrap the ZTPManager. 
 
 ```bash
 [Core]
-	HTTPUser = "admin"
-	HTTPPasswd = "Passw0rd"
+  HTTPUser = "admin"
+  HTTPPasswd = "Passw0rd"
   ServerURL = "localhost"
   ServerPort = 1323
   HTTPConfigsLocation = "configs"
@@ -126,25 +126,37 @@ If you require SSL, please raise an issue on [GitHub](https://github.com/network
 
 __Create Hosts__
 
-`curl -X POST 
--H 'Content-Type: application/json' 
--d '{ "ethernetaddress": "00:0c:29:4d:3d:cd", "fixedipaddress": "192.168.50.101", "hostname": "demo02", "vendor": "junos" }' 
-REPLACE_WITH_SERVER_IP:1323/hosts`
+curl -X POST \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
+  -d '{
+    "ethernetaddress": "00:0c:29:4d:3d:cd",
+    "fixedipaddress": "192.168.50.101",
+    "hostname": "demo02",
+    "vendor": "junos"
+    }' \
+   REPLACE_WITH_SERVER_IP:1323/hosts
 
 __Delete Hosts__
 
-`curl -X DELETE -H 'Content-Type: application/json' REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP`
+curl -X DELETE -H 'Content-Type: application/json' \
+    -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
+    REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP
 
 __Get Hosts__
 
-`curl -X GET http://REPLACE_WITH_SERVER_IP:1323/hosts`
+curl -X GET -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
+    http://REPLACE_WITH_SERVER_IP:1323/hosts
 
 __Get Individual Hosts__
 
-`curl -X GET http://REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP`
+curl -X GET -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
+    http://REPLACE_WITH_SERVER_IP:1323/hosts/REPLACE_WITH_HOST_IP
 
 __Save__
 
-`curl -X POST -H 'Content-Type: application/json' REAPLCE_WITH_SERVER_IP:1323/save`
+curl -X POST -H 'Content-Type: application/json' \
+    -H "Authorization: Basic YWRtaW46UGFzc3cwcmQ=" \
+    REAPLCE_WITH_SERVER_IP:1323/save
 
 *These docs are work in progress and will be updated regularly*
