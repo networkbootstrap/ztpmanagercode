@@ -126,6 +126,8 @@ If you require SSL, please raise an issue on [GitHub](https://github.com/network
 
 __Create Hosts__
 
+Please note, if you want to add an image for Junos to download and update, add the field `imagefile` with the full name of the image in the `/images` directory.
+
 ```bash
 curl -X POST \
   -H 'Content-Type: application/json' \

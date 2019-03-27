@@ -102,7 +102,7 @@ type CoreCfg struct {
 	NonCfgRangeLow      string   `json:"noncfgrangelow"`
 	NonCfgRangeHigh     string   `json:"noncfgrangehigh"`
 	SubnetRouter        string   `json:"subnetrouter"  dhcpd:"option routers"`
-	TransferMode        string   `json:"transfermode" dhcpd:"option ezjunosztp.transfer-mode"`
+	TransferMode        string   `toml:"-" json:"transfermode" dhcpd:"option ezjunosztp.transfer-mode"`
 	FileServer          string   `json:"fileserver" dhcpd:"option ezjunosztp-file-server"`
 	NTPServers          []string `json:"ntpservers" dhcpd:"option ntp-servers"`
 }
