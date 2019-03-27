@@ -33,7 +33,6 @@ This file contains the core configuration required to bootstrap the ZTPManager. 
   NonCfgRangeLow = "192.168.50.20"
   NonCfgRangeHigh = "192.168.50.25"
   SubnetRouter = "192.168.50.1"
-  TransferMode = "http"
   FileServer = "192.168.50.254"
   NTPServers = ["192.168.50.254"]
 
