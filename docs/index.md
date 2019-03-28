@@ -6,7 +6,7 @@ This set of docs will guide you through installation and use of ZTPManager.
     <iframe src="https://www.youtube.com/embed/3Wz4COk-ae4" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
 </div>
 
-
+<br/> <br/>
 ## What is this ZTPManager?
 
 ZTPManager is an application manager for the [ISC-DHCP-SERVER](https://www.isc.org/downloads/dhcp/) which configures it for use in Zero Touch Provisioning (ZTP) scenarios. Initially created for Junos but with some feature enhancements can probably be used for other vendors.
